@@ -40,20 +40,32 @@ const sketch = (p5) => {
         uniformGraphics.noStroke();
     };
 
+    let mouseInRainbow = false;
+    let mouseInPicker = false;
     p5.draw = () => {
         p5.translate(-p5.width / 2, -p5.height / 2);
-        let mouseInPicker = false;
+        if (!p5.mouseIsPressed) {
+            mouseInRainbow = false;
+            mouseInPicker = false;
+        }
 
         // Get hue
-        if (p5.mouseX > 0 && p5.mouseX < p5.width && p5.mouseY > 0 && p5.mouseY < BOX_TOP_HEIGHT) {
+        if (
+            !mouseInPicker &&
+            p5.mouseIsPressed &&
+            p5.mouseX > 0 &&
+            p5.mouseX < p5.width &&
+            p5.mouseY > 0 &&
+            p5.mouseY < BOX_TOP_HEIGHT
+        ) {
             h = p5.map(p5.mouseX, 0, p5.width, 0, 100);
-            mouseInPicker = true;
+            mouseInRainbow = true;
         }
 
         // Get saturation and brightness
         if (
             p5.mouseIsPressed &&
-            !mouseInPicker &&
+            !mouseInRainbow &&
             p5.mouseX > 0 &&
             p5.mouseX < PICKER_WIDTH &&
             p5.mouseY > BOX_TOP_HEIGHT &&
@@ -63,6 +75,7 @@ const sketch = (p5) => {
             _y = p5.mouseY;
             sPicker = p5.map(p5.mouseX, 0, PICKER_WIDTH, 0, 100);
             bPicker = p5.map(p5.mouseY, BOX_TOP_HEIGHT, p5.height, 100, 0);
+            mouseInPicker = true;
         }
 
         // Picker square with shader
