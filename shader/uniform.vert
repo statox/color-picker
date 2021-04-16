@@ -4,12 +4,7 @@ https://github.com/aferriss/p5jsShaderExamples
 with additional comments from Louise Lessel
 */ 
 
-
-// These are necessary definitions that let the graphics card know how to render the shader
-#ifdef GL_ES
-precision mediump float;
-#endif
-
+precision highp float;
 
 // This “vec3 aPosition” is a built in shader functionality. You must keep that naming.
 // It automatically gets the position of every vertex on your canvas

@@ -5,10 +5,7 @@ Example:
  Color the entire background blue
 */
 
-// These are necessary definitions that let the graphic card know how to render the shader
-#ifdef GL_ES
-precision mediump float;
-#endif
+precision highp float;
 
 uniform vec3 u_color;
 

@@ -25,6 +25,7 @@ const sketch = (p5) => {
         const canvas = p5.createCanvas(PICKER_WIDTH + SAMPLE_WIDTH, TOTAL_HEIGHT, p5.WEBGL);
         canvas.parent('canvasDiv');
         p5.colorMode(p5.HSB, 100);
+        p5.setAttributes('antialias', true);
 
         _x = p5.map(50, 0, 100, 0, PICKER_WIDTH);
         _y = p5.map(60, 0, 100, p5.height, BOX_TOP_HEIGHT);
@@ -101,14 +102,13 @@ const sketch = (p5) => {
         p5.rect(PICKER_WIDTH, BOX_TOP_HEIGHT, SAMPLE_WIDTH, p5.height - BOX_TOP_HEIGHT);
 
         // Picker circle
-        p5.normalMaterial();
         p5.noFill();
         p5.stroke('white');
         p5.circle(_x, _y, 30);
 
         // Rainbow cursor
         const cursorX = p5.map(h, 0, 100, 0, p5.width);
-        p5.strokeWeight(5);
+        p5.strokeWeight(10);
         p5.circle(cursorX, BOX_TOP_HEIGHT / 2, BOX_TOP_HEIGHT);
         p5.strokeWeight(1);
 
