@@ -1,0 +1,13 @@
+{
+  "name": "color-picket",
+  "version": "0.0.1",
+  "description": "Experimenting with colors",
+  "scripts": {
+    "dev": "npx light-server -s . -w \"**/*\""
+  },
+  "author": "statox",
+  "license": "MIT",
+  "devDependencies": {
+    "light-server": "^2.8.0"
+  }
+}
