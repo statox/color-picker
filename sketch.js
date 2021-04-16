@@ -1,7 +1,8 @@
 const sketch = (p5) => {
     const BOX_TOP_HEIGHT = 50;
-    const PICKER_WIDTH = 300;
-    const SAMPLE_WIDTH = 300;
+    const PICKER_WIDTH = 500;
+    const SAMPLE_WIDTH = 500;
+    const TOTAL_HEIGHT = 400;
 
     let h = 50;
     let sPicker = 50;
@@ -9,15 +10,24 @@ const sketch = (p5) => {
     let _x = 50;
     let _y = p5.map(60, 0, 100, p5.height, BOX_TOP_HEIGHT);
 
+    let pickerShader;
+    let shaderBg;
+    p5.preload = () => {
+        pickerShader = p5.loadShader('shader/picker.vert', 'shader/picker.frag');
+    };
+
     p5.setup = () => {
-        const canvas = p5.createCanvas(PICKER_WIDTH + SAMPLE_WIDTH, 300);
+        const canvas = p5.createCanvas(PICKER_WIDTH + SAMPLE_WIDTH, TOTAL_HEIGHT, p5.WEBGL);
         canvas.parent('canvasDiv');
         p5.colorMode(p5.HSB, 100);
-        console.clear();
+
+        // initialize the createGraphics layers
+        pickerGraphics = p5.createGraphics(PICKER_WIDTH, p5.height - BOX_TOP_HEIGHT, p5.WEBGL);
+        pickerGraphics.noStroke();
     };
 
     p5.draw = () => {
-        p5.noStroke();
+        p5.translate(-p5.width / 2, -p5.height / 2);
         let mouseInPicker = false;
 
         // top box
@@ -26,21 +36,12 @@ const sketch = (p5) => {
             p5.stroke(h, 100, 100);
             p5.line(x, 0, x, BOX_TOP_HEIGHT);
         }
+        p5.noStroke();
 
         // Get hue
         if (p5.mouseX > 0 && p5.mouseX < p5.width && p5.mouseY > 0 && p5.mouseY < BOX_TOP_HEIGHT) {
             h = p5.map(p5.mouseX, 0, p5.width, 0, 100);
             mouseInPicker = true;
-        }
-
-        // bottom box
-        for (let y = BOX_TOP_HEIGHT; y < p5.height; y++) {
-            for (let x = 0; x < PICKER_WIDTH; x++) {
-                const _s = p5.map(x, 0, PICKER_WIDTH, 0, 100);
-                const _b = p5.map(y, BOX_TOP_HEIGHT, p5.height, 100, 0);
-                p5.stroke(h, _s, _b);
-                p5.point(x, y);
-            }
         }
 
         // Right sample
@@ -62,6 +63,14 @@ const sketch = (p5) => {
         p5.noFill();
         p5.stroke(250);
         p5.circle(_x, _y, 10);
+
+        // Picker square with shader
+        pickerGraphics.shader(pickerShader);
+        pickerShader.setUniform('u_resolution', [PICKER_WIDTH, p5.height - BOX_TOP_HEIGHT]);
+        pickerShader.setUniform('u_hue', h / 100);
+        pickerGraphics.rect(0, 0, PICKER_WIDTH, p5.height - BOX_TOP_HEIGHT);
+        p5.texture(pickerGraphics);
+        p5.rect(0, BOX_TOP_HEIGHT, PICKER_WIDTH, p5.height - BOX_TOP_HEIGHT);
 
         // Interface
         const hsbString = `HSB: ${h.toFixed(0)} ${sPicker.toFixed(0)} ${bPicker.toFixed(0)}`;
