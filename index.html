@@ -2,6 +2,7 @@
 
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
+    <script src="colors.js"></script>
     <script src="sketch.js"></script>
     <link rel="stylesheet" href="index.css">
 </head>
@@ -9,7 +10,28 @@
 <body>
     <div id='app'>
         <div oncontextmenu="return false;" id="canvasDiv"></div>
-        <span id="hsb_span">150, 0, 0</span>
+        <table>
+            <thead>
+                <tr>
+                    <th>System</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>HSB</td>
+                    <td><span id="hsb_span"></span></td>
+                </tr>
+                <tr>
+                    <td>RGB</td>
+                    <td><span id="rgb_span"></span></td>
+                </tr>
+                <tr>
+                    <td>HEX</td>
+                    <td><span id="hex_span"></span></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </body>
 
