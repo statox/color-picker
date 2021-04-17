@@ -15,6 +15,12 @@ const sketch = (p5) => {
     let uniformShader;
     let shaderBg;
 
+    let appData = {
+        hexColor: '',
+        rgbColor: '',
+        hsbColor: ''
+    };
+
     p5.preload = () => {
         pickerShader = p5.loadShader('shader/picker.vert', 'shader/picker.frag');
         rainbowShader = p5.loadShader('shader/rainbow.vert', 'shader/rainbow.frag');
@@ -22,6 +28,11 @@ const sketch = (p5) => {
     };
 
     p5.setup = () => {
+        app = new Vue({
+            el: '#app',
+            data: appData
+        });
+
         const canvas = p5.createCanvas(PICKER_WIDTH + SAMPLE_WIDTH, TOTAL_HEIGHT, p5.WEBGL);
         canvas.parent('canvasDiv');
         p5.colorMode(p5.HSB, 100);
@@ -114,14 +125,13 @@ const sketch = (p5) => {
 
         // Interface
         const hsbString = `${((360 * h) / 100).toFixed(0)} ${sPicker.toFixed(0)} ${bPicker.toFixed(0)}`;
-        document.getElementById('hsb_span').innerHTML = hsbString;
+        appData.hsbColor = hsbString;
 
         const {r, g, b} = hsv2rgb(h / 100, sPicker / 100, bPicker / 100);
-        const rgbString = `${r} ${g} ${b}`;
-        document.getElementById('rgb_span').innerHTML = rgbString;
+        appData.rgbColor = `${r} ${g} ${b}`;
 
         const hexString = rgb2hex(r, g, b);
-        document.getElementById('hex_span').innerHTML = hexString;
+        appData.hexColor = hexString;
     };
 };
 

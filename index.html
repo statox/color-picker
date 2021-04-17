@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
     <script src="colors.js"></script>
     <script src="sketch.js"></script>
@@ -20,15 +21,15 @@
             <tbody>
                 <tr>
                     <td>HSB</td>
-                    <td><span id="hsb_span"></span></td>
+                    <td><span id="hsb_span">{{hsbColor}}</span></td>
                 </tr>
                 <tr>
                     <td>RGB</td>
-                    <td><span id="rgb_span"></span></td>
+                    <td><span id="rgb_span">{{rgbColor}}</span></td>
                 </tr>
                 <tr>
                     <td>HEX</td>
-                    <td><span id="hex_span"></span></td>
+                    <td><span id="hex_span">{{hexColor}}</span></td>
                 </tr>
             </tbody>
         </table>
