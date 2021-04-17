@@ -1,9 +1,9 @@
 // Takes rgb normalized (0.0 -> 1.0)
 // returns rgb as hex
 function rgb2hex(r, g, b) {
-    return `#${r.toString(16).padStart(2, '0')}
-    ${g.toString(16).padStart(2, '0')}
-    ${b.toString(16).padStart(2, '0')}`.toUpperCase();
+    return `${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b
+        .toString(16)
+        .padStart(2, '0')}`.toUpperCase();
 }
 
 // https://stackoverflow.com/a/17243070

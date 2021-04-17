@@ -16,9 +16,13 @@ const sketch = (p5) => {
     let shaderBg;
 
     let appData = {
-        hexColor: '',
-        rgbColor: '',
-        hsbColor: ''
+        hsb: {
+            H: h,
+            S: sPicker,
+            B: bPicker
+        },
+        rgb: {r: 0, g: 0, b: 0},
+        hex: ''
     };
 
     p5.preload = () => {
@@ -30,7 +34,12 @@ const sketch = (p5) => {
     p5.setup = () => {
         app = new Vue({
             el: '#app',
-            data: appData
+            data: appData,
+            watch: {
+                hsv: function (val) {
+                    console.log(`hsv changed ${val}`);
+                }
+            }
         });
 
         const canvas = p5.createCanvas(PICKER_WIDTH + SAMPLE_WIDTH, TOTAL_HEIGHT, p5.WEBGL);
@@ -55,6 +64,10 @@ const sketch = (p5) => {
     let mouseInRainbow = false;
     let mouseInPicker = false;
     p5.draw = () => {
+        h = appData.hsb.H % 100;
+        sPicker = appData.hsb.S;
+        bPicker = appData.hsb.B;
+
         p5.translate(-p5.width / 2, -p5.height / 2);
         if (!p5.mouseIsPressed) {
             mouseInRainbow = false;
@@ -85,8 +98,8 @@ const sketch = (p5) => {
         ) {
             _x = p5.mouseX;
             _y = p5.mouseY;
-            sPicker = p5.map(p5.mouseX, 0, PICKER_WIDTH, 0, 100);
-            bPicker = p5.map(p5.mouseY, BOX_TOP_HEIGHT, p5.height, 100, 0);
+            sPicker = Math.ceil(p5.map(p5.mouseX, 0, PICKER_WIDTH, 0, 100));
+            bPicker = Math.ceil(p5.map(p5.mouseY, BOX_TOP_HEIGHT, p5.height, 100, 0));
             mouseInPicker = true;
         }
 
@@ -115,7 +128,9 @@ const sketch = (p5) => {
         // Picker circle
         p5.noFill();
         p5.stroke('white');
-        p5.circle(_x, _y, 30);
+        const circleX = p5.map(sPicker, 0, 100, 0, PICKER_WIDTH);
+        const circleY = p5.map(bPicker, 0, 100, p5.height, BOX_TOP_HEIGHT);
+        p5.circle(circleX, circleY, 30);
 
         // Rainbow cursor
         const cursorX = p5.map(h, 0, 100, 0, p5.width);
@@ -124,14 +139,16 @@ const sketch = (p5) => {
         p5.strokeWeight(1);
 
         // Interface
-        const hsbString = `${((360 * h) / 100).toFixed(0)} ${sPicker.toFixed(0)} ${bPicker.toFixed(0)}`;
-        appData.hsbColor = hsbString;
+        appData.hsb = {
+            H: h,
+            S: sPicker,
+            B: bPicker
+        };
 
         const {r, g, b} = hsv2rgb(h / 100, sPicker / 100, bPicker / 100);
-        appData.rgbColor = `${r} ${g} ${b}`;
+        appData.rgb = {R: r, G: g, B: b};
 
-        const hexString = rgb2hex(r, g, b);
-        appData.hexColor = hexString;
+        appData.hex = rgb2hex(r, g, b);
     };
 };
 

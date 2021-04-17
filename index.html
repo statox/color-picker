@@ -1,39 +1,59 @@
 <html>
 
 <head>
+    <!-- newcss framework, lightweight and elegant css framework -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/open-fonts@1.1.1/fonts/inter.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
+    <link rel="stylesheet" href="index.css">
+
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
     <script src="colors.js"></script>
+    <script src="interface.js"></script>
     <script src="sketch.js"></script>
-    <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
     <div id='app'>
         <div oncontextmenu="return false;" id="canvasDiv"></div>
-        <table>
-            <thead>
-                <tr>
-                    <th>System</th>
-                    <th>Value</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>HSB</td>
-                    <td><span id="hsb_span">{{hsbColor}}</span></td>
-                </tr>
-                <tr>
-                    <td>RGB</td>
-                    <td><span id="rgb_span">{{rgbColor}}</span></td>
-                </tr>
-                <tr>
-                    <td>HEX</td>
-                    <td><span id="hex_span">{{hexColor}}</span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>System</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>HSB</td>
+                        <td>
+                            <span>
+                                <input class="input-c3" v-model="hsb.H" type="number" min="0" max="100">%,
+                                <input class="input-c3" v-model="hsb.S" type="number" min="0" max="100">%,
+                                <input class="input-c3" v-model="hsb.B" type="number" min="0" max="100">%
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>RGB</td>
+                        <td>
+                            <span>
+                                <input disabled class="input-c3" v-model="rgb.R">,
+                                <input disabled class="input-c3" v-model="rgb.G" type="number">,
+                                <input disabled class="input-c3" v-model="rgb.B" type="number">
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>HEX</td>
+                        <td>
+                            <span id="hex_span"># <input disabled class="input-c9" v-model="hex"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 </body>
 
 </html>
