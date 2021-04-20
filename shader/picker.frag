@@ -1,6 +1,7 @@
 precision highp float;
 
 uniform vec2 u_resolution;
+uniform float u_hue;
 
 // https://gist.github.com/yiwenl/745bfea7f04c456e0101
 vec3 hsb2rgb(vec3 c)
@@ -16,7 +17,7 @@ void main() {
 
     // Get the current hue aas uniform and use the position
     // to make the hsb color and translate it
-    vec3 color = hsb2rgb(vec3(st.x, 1, 1));
+    vec3 color = hsb2rgb(vec3(u_hue, st.x, st.y));
 
     // Color the pixel
     gl_FragColor = vec4(color, 1.0);

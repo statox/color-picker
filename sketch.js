@@ -1,7 +1,7 @@
 const sketch = (p5) => {
     p5.preload = () => {
         // load the shader
-        theShader = p5.loadShader('shader/rainbow.vert', 'shader/rainbow.frag');
+        theShader = p5.loadShader('shader/picker.vert', 'shader/picker.frag');
     };
 
     p5.setup = () => {
@@ -14,6 +14,7 @@ const sketch = (p5) => {
         // shader() sets the active shader with our shader
         p5.shader(theShader);
         theShader.setUniform('u_resolution', [p5.width, p5.height]);
+        theShader.setUniform('u_hue', [p5.map(p5.mouseX, 0, p5.width, 0, 1)]);
 
         // rect gives us some geometry on the screen
         p5.rect(0, 0, p5.width, p5.height);
