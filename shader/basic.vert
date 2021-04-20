@@ -28,3 +28,4 @@ void main() {
   // this is done automatically, as long as you put it into the built in shader function “gl_Position”
   gl_Position = positionVec4;
 }
+
