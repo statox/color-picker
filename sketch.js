@@ -52,12 +52,15 @@ const sketch = (p5) => {
 
         // initialize the createGraphics layers
         pickerGraphics = p5.createGraphics(PICKER_WIDTH, p5.height - BOX_TOP_HEIGHT, p5.WEBGL);
+        pickerGraphics.shader(pickerShader);
         pickerGraphics.noStroke();
 
         rainbowGraphics = p5.createGraphics(p5.width, BOX_TOP_HEIGHT, p5.WEBGL);
+        rainbowGraphics.shader(rainbowShader);
         rainbowGraphics.noStroke();
 
         uniformGraphics = p5.createGraphics(SAMPLE_WIDTH, p5.height, p5.WEBGL);
+        uniformGraphics.shader(uniformShader);
         uniformGraphics.noStroke();
     };
 
@@ -104,7 +107,6 @@ const sketch = (p5) => {
         }
 
         // Picker square with shader
-        pickerGraphics.shader(pickerShader);
         pickerShader.setUniform('u_resolution', [PICKER_WIDTH, p5.height - BOX_TOP_HEIGHT]);
         pickerShader.setUniform('u_hue', h / 100);
         pickerGraphics.rect(0, 0, PICKER_WIDTH, p5.height - BOX_TOP_HEIGHT);
@@ -112,14 +114,12 @@ const sketch = (p5) => {
         p5.rect(0, BOX_TOP_HEIGHT, PICKER_WIDTH, p5.height - BOX_TOP_HEIGHT);
 
         // rainbow
-        rainbowGraphics.shader(rainbowShader);
         rainbowShader.setUniform('u_resolution', [p5.width, BOX_TOP_HEIGHT]);
         rainbowGraphics.rect(0, 0, p5.width, BOX_TOP_HEIGHT);
         p5.texture(rainbowGraphics);
         p5.rect(0, 0, p5.width, BOX_TOP_HEIGHT);
 
         // sample
-        uniformGraphics.shader(uniformShader);
         uniformShader.setUniform('u_color', [h / 100, sPicker / 100, bPicker / 100]);
         uniformGraphics.rect(PICKER_WIDTH, BOX_TOP_HEIGHT, SAMPLE_WIDTH, p5.height - BOX_TOP_HEIGHT);
         p5.texture(uniformGraphics);
@@ -134,7 +134,7 @@ const sketch = (p5) => {
 
         // Rainbow cursor
         const cursorX = p5.map(h, 0, 100, 0, p5.width);
-        p5.strokeWeight(10);
+        p5.strokeWeight(1);
         p5.circle(cursorX, BOX_TOP_HEIGHT / 2, BOX_TOP_HEIGHT);
         p5.strokeWeight(1);
 

@@ -16,3 +16,11 @@ input[type=number] {
     width: 192px;
     border: 0px;
 }
+
+tr {
+    /* Set every other cell slightly darker. Improves readability. */
+    background: 'red';
+    font-weight: normal;
+    border-bottom: 1px solid var(--nc-tx-1);
+}
+
